@@ -1,4 +1,4 @@
-<!-- <script lang="ts">
+<script lang="ts">
   import { urlFor } from '../utils/image-builder';
   export let footerData: any;
 
@@ -8,194 +8,166 @@
 </script>
 
 <footer class="footer">
-  <div class="footer-wave">
-    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
-  <path
-    d="M0,224L48,218.7C96,213,192,203,288,197.3C384,192,480,192,576,181.3C672,171,768,149,864,128C960,107,1056,85,1152,101.3C1248,117,1344,171,1392,197.3L1440,224"
-    fill="none"
-    stroke="#226DAB"
-    stroke-width="3"
-  />
-</svg>
-
-  </div>
-
-  {#if logo}
-    <div class="footer-logo">
-      <img
-  src={urlFor(logo).width(300).format('webp').url()}
-  srcset={`${urlFor(logo).width(150).format('webp').url()} 1x, ${urlFor(logo).width(300).format('webp').url()} 2x`}
-  alt={footerTitle || 'Footer Logo'}
-  width="150"
-/>
-
+  <div class="footer-columns">
+    <!-- Column 1: Logo + Company Overview -->
+    <div class="footer-about">
+      {#if logo}
+        <div class="footer-logo">
+          <img
+            src={urlFor(logo).width(150).format('webp').url()}
+            srcset={`${urlFor(logo).width(75).format('webp').url()} 1x, ${urlFor(logo).width(150).format('webp').url()} 2x`}
+            alt={footerTitle || 'Footer Logo'}
+            width="100"
+          />
+        </div>
+      {/if}
+      {#if footerData?.footerText}
+        <div class="footer-text">
+          <p>{footerData.footerText}</p>
+        </div>
+      {/if}
     </div>
-  {/if}
 
-  <div class="footer-menus">
-    {#each menus as menu}
-      <div class="footer-menu">
-        <h4>{menu.menuTitle}</h4>
-        <nav>
-
-
-        <ul>
-          {#each menu.links as link}
-            <li>
-              <a href={link.slug?.current ? (link.slug.current.startsWith('/') ? link.slug.current : '/' + link.slug.current) : '#'}>
-                {link.label}
-              </a>
-            </li>
-          {/each}
-        </ul>
-
-        </nav>
+    <!-- Column 2: Useful Links -->
+    {#if menus.length}
+      <div class="footer-links">
+        <h4>Useful Links</h4>
+        {#each menus as menu}
+          <div class="footer-menu">
+            <ul>
+              {#each menu.links as link}
+                <li>
+                  <a href={link.slug?.current ? (link.slug.current.startsWith('/') ? link.slug.current : '/' + link.slug.current) : '#'}>
+                    {link.label}
+                  </a>
+                </li>
+              {/each}
+            </ul>
+          </div>
+        {/each}
       </div>
-    {/each}
+    {/if}
+
+    <!-- Column 3: Contact Info -->
+    {#if footerData?.addressSection}
+      <div class="footer-contact">
+        <h4>{footerData.addressSection.addressTitle || 'Contact'}</h4>
+        {#if footerData.addressSection.address}
+          <p>{footerData.addressSection.address}</p>
+        {/if}
+        {#if footerData.addressSection.email}
+          <p>Email: <a href={`mailto:${footerData.addressSection.email}`}>{footerData.addressSection.email}</a></p>
+        {/if}
+        {#if footerData.addressSection.phone}
+          <p>Phone: <a href={`tel:${footerData.addressSection.phone}`}>{footerData.addressSection.phone}</a></p>
+        {/if}
+      </div>
+    {/if}
   </div>
 
-  {#if footerData?.footerText}
-    <div class="footer-text">{footerData.footerText}</div>
-  {/if}
-
-  {#if footerData?.addressSection}
-    <div class="footer-address">
-      {#if footerData.addressSection.addressTitle}
-        <h4>{footerData.addressSection.addressTitle}</h4>
-      {/if}
-      {#if footerData.addressSection.address}
-        <p>{footerData.addressSection.address}</p>
-      {/if}
-      {#if footerData.addressSection.email}
-        <p>Email: <a href={`mailto:${footerData.addressSection.email}`}>{footerData.addressSection.email}</a></p>
-      {/if}
-      {#if footerData.addressSection.phone}
-        <p>Phone: <a href={`tel:${footerData.addressSection.phone}`}>{footerData.addressSection.phone}</a></p>
-      {/if}
+  <!-- Social Icons -->
+  {#if footerData?.socialLinks?.length}
+    <div class="footer-social">
+      {#each footerData.socialLinks as social}
+        {#if social.url}
+          <a
+            href={social.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={social.platform}
+          >
+            <i class={`fab fa-${social.iconName}`}></i>
+          </a>
+        {/if}
+      {/each}
     </div>
   {/if}
 
-  {#if footerData?.socialLinks?.length}
-   <div class="footer-social">
-  {#each footerData.socialLinks as social}
-    {#if social.url}
-      <a
-        href={social.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={social.platform}
-      >
-        <i class={`fab fa-${social.iconName}`}></i>
-      </a>
-    {/if}
-  {/each}
-</div>
-
-  {/if}
-
+  <!-- Copyright -->
   {#if footerData?.copyrightText}
-    <div class="footer-title">
-      {footerData.copyrightText}
+    <div class="footer-bottom">
+      <p>{footerData.copyrightText}</p>
     </div>
   {/if}
 </footer>
 
 <style>
   .footer {
-    background-color: #ffffff;
-    color: #226DAB;
-    padding: 150px 3rem 3rem;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
+    background-color: #fff;
+    color: #1f1f1f;
+    padding: 4rem 2rem 2rem;
+    font-family: 'Helvetica Neue', sans-serif;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .footer-columns {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: flex-start;
     gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
-  .footer-wave {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    z-index: 0;
-    overflow: hidden;
-    line-height: 0;
-  }
-
-  .footer-wave svg {
-    display: block;
-    width: 100%;
-    height: 150px;
+  .footer-about,
+  .footer-links,
+  .footer-contact {
+    flex: 1 1 300px;
+    font-size: 0.95rem;
+    color: #555;
   }
 
   .footer-logo img {
     display: block;
-    max-width: 100%;
-    height: auto;
-    z-index: 2;
-    position: relative;
+    margin-bottom: 1rem;
+    max-width: 100px;
   }
 
-  .footer-menus {
-    display: flex;
-    gap: 3rem;
-    flex-wrap: wrap;
-    z-index: 2;
-    position: relative;
-  }
-
-  .footer-menu h4 {
+  .footer-text h4,
+  .footer-links h4,
+  .footer-contact h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
     margin-bottom: 0.75rem;
-    font-size: 1.2rem;
-    font-weight: bold;
+    color: #0d79d3;
   }
 
-  .footer-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size:16px;
-  }
-
-  .footer-menu li {
+  .footer-text p,
+  .footer-contact p {
     margin-bottom: 0.5rem;
   }
 
-  .footer-menu a {
-    color: #000;
-    text-decoration: none;
-    transition: color 0.3s;
-    font-weight:500 !important;
+  .footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  .footer-menu a:hover {
+  .footer-links li {
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-links a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover {
+    color: #0d79d3;
     text-decoration: underline;
   }
 
-  .footer-address,
-  .footer-text {
-    max-width: 300px;
-    color: #444;
-    font-size: 0.95rem;
-    z-index: 2;
-    position: relative;
-  }
-
   .footer-social {
+    margin-top: 2rem;
     display: flex;
-    gap: 1rem;
-    align-items: center;
-    z-index: 2;
-    position: relative;
+    justify-content: center;
+    gap: 1.5rem;
   }
 
   .footer-social i {
+    font-size: 1.3rem;
     color: #226DAB;
-    font-size: 1.25rem;
     transition: color 0.3s ease;
   }
 
@@ -203,32 +175,24 @@
     color: #1a4f7d;
   }
 
-  .footer-title {
-    width: 100%;
-    margin-top: 2rem;
+  .footer-bottom {
     text-align: center;
-    font-size: 0.9rem;
-    color: #000000;
-    z-index: 2;
-    position: relative;
-    text-align:justify;
-    font-weight:500 !important;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: #666;
   }
 
-  @media (max-width: 600px) {
-    .footer {
+  @media (max-width: 768px) {
+    .footer-columns {
       flex-direction: column;
       align-items: center;
-    }
-
-    .footer-menus {
-      flex-direction: column;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .footer-menu h4 {
       text-align: center;
     }
+
+    .footer-about,
+    .footer-links,
+    .footer-contact {
+      width: 100%;
+    }
   }
-</style> -->
+</style>

@@ -1,7 +1,7 @@
 export const particleConfig = {
   particles: {
     number: {
-      value: 100,
+      value: 140,
       density: { enable: true, value_area: 800 }
     },
     color: { value: "#848D95" },
@@ -15,7 +15,7 @@ export const particleConfig = {
     line_linked: {
       enable: true,
       distance: 150,
-      color: "#848D95",
+      color: "#0d79d3",
       opacity: 0.4,
       width: 1
     },
