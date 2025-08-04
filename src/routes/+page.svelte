@@ -1,5 +1,8 @@
 <script lang="ts">
   import { urlFor } from '$lib/utils/image-builder';
+  import { onMount } from 'svelte';
+  import { particleConfig } from '$lib/particles'; // or define inline
+
   export let data;
 
   const page = data.homePage;
@@ -18,6 +21,12 @@
       .quality(80)
       .url();
   }
+
+  onMount(() => {
+    if (typeof window !== 'undefined' && window.particlesJS) {
+      window.particlesJS('particles-js', particleConfig);
+    }
+  });
 </script>
 
 <svelte:head>
@@ -25,18 +34,20 @@
 </svelte:head>
 
 {#if heroBlock}
-  <section
-    class="hero-section"
-    style="background-image: url('{backgroundImageUrl}')"
-    aria-label="Hero Section"
-  >
+  <section class="hero-section" aria-label="Hero Section">
+    <div id="particles-js"></div>
     <div class="hero-content">
       <h1>{heroBlock.title}</h1>
       <p>{heroBlock.subtitle}</p>
     </div>
   </section>
 {:else}
-  <p class="no-content">No hero section found.</p>
+  <section class="hero-section" aria-label="Hero Section">
+    <div id="particles-js"></div>
+    <div class="hero-content">
+      <h1>Master Media</h1>
+    </div>
+  </section>
 {/if}
 
 <style>
@@ -44,46 +55,53 @@
     position: relative;
     width: 100%;
     height: 100vh;
-    background-size: cover;
-    background-position: center;
-    color: white;
     display: flex;
-    align-items: center;
     justify-content: center;
-    text-align: center;
+    align-items: center;
+    overflow: hidden;
+    
+  }
+
+  #particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    top: 0;
+    left: 0;
   }
 
   .hero-content {
-    background-color: rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
     padding: 2rem;
-    border-radius: 1rem;
-    max-width: 700px;
+    max-width: 800px;
+    margin: 0 auto;
   }
 
   .hero-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
+    font-size: 6rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color:#0d79d3;
+    pointer-events:none;
   }
 
   .hero-content p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-  }
-
-  .no-content {
-    padding: 4rem;
-    text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color:#000000;
   }
 
   @media (max-width: 768px) {
     .hero-content h1 {
-      font-size: 1.8rem;
+      font-size: 2.5rem;
     }
-
+    
     .hero-content p {
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
   }
 </style>
