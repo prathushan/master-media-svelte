@@ -297,7 +297,7 @@ function handleScroll() {
   }
 
   .hero-content p {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 2rem;
     color: #000000;
   }
