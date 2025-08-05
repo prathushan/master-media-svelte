@@ -1,8 +1,6 @@
 // src/routes/contact/+server.ts
-import { serverClient } from '$lib/utils/sanity.server';
-import { json } from '@sveltejs/kit';
-
-
+import { serverClient } from "$lib/utils/sanity.server";
+import { json } from "@sveltejs/kit";
 
 export async function POST({ request }) {
   try {
