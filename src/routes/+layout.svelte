@@ -6,7 +6,7 @@
   import '../app.css'
 </script>
 
-<!-- ✅ Add this block -->
+
 <svelte:head>
   <title>Master media</title>
   <meta name="description" content="Hope Cathedral – A place of hope and restoration" />
