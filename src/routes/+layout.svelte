@@ -10,7 +10,7 @@
   <title>Master media</title>
   <meta
     name="description"
-    content="Hope Cathedral – A place of hope and restoration"
+    content="Agency for ambitious brands like yours driving positive change"
   />
 </svelte:head>
 

@@ -20,6 +20,7 @@
     position: relative;
     min-height: 70vh;
     overflow: hidden;
+    cursor:move;
 
   }
 

@@ -114,8 +114,6 @@ function handleScroll() {
 
 <svelte:head>
   <title>{page?.title ?? 'Home'}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </svelte:head>
 
 {#if heroBlock}
@@ -483,7 +481,6 @@ function handleScroll() {
     position: relative;
     padding: 2rem 2rem;
     background-color: #f8fafc;
-    font-family: 'Inter', sans-serif;
   }
 
   .fancy-testimonial-container {
