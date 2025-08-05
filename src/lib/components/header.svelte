@@ -1,5 +1,6 @@
 <script lang="ts">
   import { urlFor } from '../utils/image-builder';
+  import { onMount } from 'svelte';
 
   export let menu: any;
 
@@ -13,6 +14,7 @@
   const sizes = '(max-width: 600px) 100px, 150px';
 
   let isMenuOpen = false;
+  let scrolled = false;
 
   function toggleMenu() {
     isMenuOpen = !isMenuOpen;
@@ -21,9 +23,21 @@
   function closeMenu() {
     isMenuOpen = false;
   }
+
+  onMount(() => {
+    const handleScroll = () => {
+      scrolled = window.scrollY > 10;
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
 </script>
 
-<header class="site-header">
+<header class="site-header {scrolled ? 'scrolled' : ''}">
   <a href="/" class="logo">
     <img
       src={urlFor(logo).width(150).format('webp').url()}
@@ -74,10 +88,24 @@
     justify-content: space-between;
     align-items: center;
     z-index: 1001;
+    transition: all 0.3s ease;
+    background-color: transparent;
+  }
+
+  .site-header.scrolled {
+  background-color: #ffffff;
+  box-shadow: 6px 6px 12px #bebebe, -6px -6px 12px #ffffff;
+  backdrop-filter: blur(5px);
+}
+
+
+  .site-header.scrolled .bar {
+    background-color: #0d79d3;
   }
 
   .logo img {
     height: 50px;
+    transition: all 0.3s ease;
   }
 
   .hamburger {
@@ -96,7 +124,7 @@
   .hamburger .bar {
     height: 5px;
     width: 100%;
-    background-color: #0d79d3;
+    background-color:#0d79d3;
     border-radius: 2px;
     transition: all 0.3s ease;
     transform-origin: center;
@@ -171,8 +199,6 @@
   .menu-overlay.open .menu-panel {
     transform: translateX(0);
   }
-
-
 
   .menu-list {
     list-style: none;
