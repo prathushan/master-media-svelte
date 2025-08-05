@@ -1,20 +1,13 @@
 <script lang="ts">
-  import { urlFor } from '$lib/utils/image-builder';
+  import { urlFor } from "$lib/utils/image-builder";
+  import Particles from "$lib/components/Particles.svelte";
   export let data;
 
   const page = data.servicesPage;
 </script>
 
 <svelte:head>
-  <title>{page?.title ?? 'Services'}</title>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-    rel="stylesheet"
-  />
+  <title>{page?.title ?? "Services"}</title>
 </svelte:head>
 
 {#if page?.content}
@@ -22,15 +15,7 @@
     {#if section.label === "Banner"}
       {#each section.block as block}
         {#if block._type === "heroSection"}
-          <section
-            class="hero"
-            style="background-image: url('{urlFor(block.backgroundImage.asset._ref)}');"
-          >
-            <div class="hero-content">
-              <h1>{block.title}</h1>
-              <p>{block.subtitle}</p>
-            </div>
-          </section>
+          <Particles title={block.title} subtitle={""} />
         {/if}
       {/each}
     {/if}
@@ -44,23 +29,38 @@
             <h2>{block.sectionTitle}</h2>
             <div class="card-grid">
               {#each block.cards as card, index}
-                <div class="card" style="--clr:
-                  {index === 0 ? '#d3b19a' :
-                   index === 1 ? '#70b3b1' :
-                   index === 2 ? '#d05fa2' : 
-                   index === 3 ? '#d3b19a' :
-                   index === 4 ? '#70b3b1' :
-                   index === 5 ? '#d05fa2' :'#000'}">
+                <div
+                  class="card"
+                  style="--clr:
+                  {index === 0
+                    ? '#d3b19a'
+                    : index === 1
+                      ? '#70b3b1'
+                      : index === 2
+                        ? '#d05fa2'
+                        : index === 3
+                          ? '#d3b19a'
+                          : index === 4
+                            ? '#70b3b1'
+                            : index === 5
+                              ? '#d05fa2'
+                              : '#000'}"
+                >
                   <div class="card-inner">
                     <div class="box">
                       <div class="imgBox">
                         {#if card.image?.asset?._ref}
-                          <img src="{urlFor(card.image.asset)}" alt="{card.title}" />
+                          <img
+                            src={urlFor(card.image.asset)}
+                            alt={card.title}
+                          />
                         {/if}
                       </div>
                       <div class="icon">
-                        <a  class="iconBox">
-                          <span class="material-symbols-outlined">arrow_outward</span>
+                        <a class="iconBox">
+                          <span class="material-symbols-outlined"
+                            >arrow_outward</span
+                          >
                         </a>
                       </div>
                     </div>
@@ -79,24 +79,23 @@
 {/if}
 
 <style>
-  :global(body) {
-    font-family: "Lato", sans-serif;
-    background: #fff;
-    margin: 0;
-    color: #111;
-  }
-
   .hero {
+    height: 75vh;
     padding: 4rem 2rem;
     color: white;
     text-align: center;
     background-size: cover;
     background-position: center;
   }
-
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .hero-content h1 {
     font-size: 2.8rem;
-    margin-bottom: 0.5rem;
+    margin: 0;
   }
 
   .hero-content p {
@@ -169,7 +168,7 @@
     text-decoration: none !important;
   }
 
-    .iconBox {
+  .iconBox {
     position: absolute;
     inset: 0.625rem;
     background: var(--clr);
@@ -216,17 +215,14 @@
   }
 
   .card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* force 3 columns always */
-  gap: 2rem;
-}
-
-@media (max-width: 768px) {
-  .card-grid {
-    grid-template-columns: repeat(1, 1fr);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* force 3 columns always */
+    gap: 2rem;
   }
-}
 
-
-
+  @media (max-width: 768px) {
+    .card-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
 </style>
