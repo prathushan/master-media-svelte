@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { urlFor } from '$lib/utils/image-builder';
-  import { onMount } from 'svelte';
-  import { particleConfig } from '$lib/particles';
+  import { urlFor } from "$lib/utils/image-builder";
+  import { onMount } from "svelte";
+  import Particles from "$lib/components/Particles.svelte";
 
   export let data;
 
@@ -9,31 +9,30 @@
   const contentBlocks = page?.content || [];
 
   const heroBlock = contentBlocks
-    .find(block => block._type === 'builderBlock')
-    ?.block?.find(b => b._type === 'heroSection');
+    .find((block) => block._type === "builderBlock")
+    ?.block?.find((b) => b._type === "heroSection");
 
   const imageWithTextBlocks = contentBlocks
-    .filter(block => block._type === 'builderBlock')
-    .flatMap(b => b.block)
-    .filter(b => b._type === 'imageWithText');
+    .filter((block) => block._type === "builderBlock")
+    .flatMap((b) => b.block)
+    .filter((b) => b._type === "imageWithText");
 
   const testimonialBlock = contentBlocks
-    .filter(block => block._type === 'builderBlock')
-    .flatMap(b => b.block)
-    .find(b => b._type === 'testimonialsSection');
+    .filter((block) => block._type === "builderBlock")
+    .flatMap((b) => b.block)
+    .find((b) => b._type === "testimonialsSection");
 
   const illustrationBlock = contentBlocks
-  .filter(block => block._type === 'builderBlock')
-  .flatMap(b => b.block)
-  .find(b => b._type === 'cardSection');
+    .filter((block) => block._type === "builderBlock")
+    .flatMap((b) => b.block)
+    .find((b) => b._type === "cardSection");
 
-
-  let backgroundImageUrl = '';
+  let backgroundImageUrl = "";
   if (heroBlock?.backgroundImage?.asset?._ref) {
     backgroundImageUrl = urlFor(heroBlock.backgroundImage)
       .width(1600)
       .height(900)
-      .auto('format')
+      .auto("format")
       .quality(80)
       .url();
   }
@@ -44,15 +43,16 @@
   let sliderInterval;
   let autorotate = true;
   let autorotateTiming = 2000;
-  
+
   function nextTestimonial() {
     currentTestimonial = (currentTestimonial + 1) % testimonials.length;
   }
-  
+
   function prevTestimonial() {
-    currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+    currentTestimonial =
+      (currentTestimonial - 1 + testimonials.length) % testimonials.length;
   }
-  
+
   function goToTestimonial(index) {
     currentTestimonial = index;
   }
@@ -64,14 +64,14 @@
 
   // Animation triggers
   let animatedElements = [];
-  
+
   function handleScroll() {
     animatedElements.forEach((el, index) => {
       const rect = el.getBoundingClientRect();
       const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom >= 0;
-      
+
       if (isVisible) {
-        el.classList.add('animate-in');
+        el.classList.add("animate-in");
         // Remove after animation completes to optimize performance
         setTimeout(() => animatedElements.splice(index, 1), 1000);
       }
@@ -79,48 +79,41 @@
   }
 
   onMount(() => {
-    if (typeof window !== 'undefined' && window.particlesJS) {
-      window.particlesJS('particles-js', particleConfig);
-    }
-    
+  
+
     // Initialize scroll animations
-    animatedElements = Array.from(document.querySelectorAll('.image-text-section'));
-    window.addEventListener('scroll', handleScroll);
+    animatedElements = Array.from(
+      document.querySelectorAll(".image-text-section")
+    );
+    window.addEventListener("scroll", handleScroll);
     handleScroll(); // Check on initial load
-    
+
     // Auto-rotate testimonials
     if (testimonials.length > 1 && autorotate) {
       sliderInterval = setInterval(nextTestimonial, autorotateTiming);
     }
-    
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       clearInterval(sliderInterval);
     };
   });
 </script>
 
 <svelte:head>
-  <title>{page?.title ?? 'Home'}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>{page?.title ?? "Home"}</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Onest:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
 </svelte:head>
 
 {#if heroBlock}
-  <section class="hero-section" aria-label="Hero Section">
-    <div id="particles-js"></div>
-    <div class="hero-content">
-      <h1>{heroBlock.title}</h1>
-      <p>{heroBlock.subtitle}</p>
-    </div>
-  </section>
-{:else}
-  <section class="hero-section" aria-label="Hero Section">
-    <div id="particles-js"></div>
-    <div class="hero-content">
-      <h1>Master Media</h1>
-    </div>
-  </section>
+  <Particles title={heroBlock.title} subtitle={heroBlock.subtitle} />
 {/if}
 
 {#if illustrationBlock}
@@ -140,41 +133,53 @@
   </section>
 {/if}
 
-
-
 <!-- Modern ImageWithText Section -->
 {#if imageWithTextBlocks.length}
   {#each imageWithTextBlocks as block, index (block._key)}
-    <section class={`image-text-section ${index % 2 === 1 ? 'reversed' : ''}`} 
-             in:fly={{ y: 50, duration: 500, delay: index * 150 }}
-             out:fade
-             animate:fade>
+    <section
+      class={`image-text-section ${index % 2 === 1 ? "reversed" : ""}`}
+      in:fly={{ y: 50, duration: 500, delay: index * 150 }}
+      out:fade
+      animate:fade
+    >
       <div class="text-column">
-        <h5 class="section-label">{index === 1 ? 'Services' : 'About Us'}</h5>
+        <h5 class="section-label">{index === 1 ? "Services" : "About Us"}</h5>
         {#if block.title}
           <h2 class="section-title">{block.title}</h2>
         {/if}
         {#if block.description}
           <div class="section-description">
-            {@html block.description.replace(/\n/g, '<br>')}
+            {@html block.description.replace(/\n/g, "<br>")}
           </div>
         {/if}
         {#if block.button?.label && block.button?.url}
           <a href={block.button.url} class="modern-button">
             <span>{block.button.label}</span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5 12H19M19 12L12 5M19 12L12 19"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </a>
         {/if}
       </div>
       <div class="image-column">
-        {#if block.mediaType === 'image' && block.image?.asset?._ref}
+        {#if block.mediaType === "image" && block.image?.asset?._ref}
           <div class="modern-image-wrapper">
             <div class="image-border-accent"></div>
-            <img 
-              src={urlFor(block.image).width(800).url()} 
-              alt={block.title || 'Image'}
+            <img
+              src={urlFor(block.image).width(800).url()}
+              alt={block.title || "Image"}
               loading="lazy"
             />
             <div class="image-overlay"></div>
@@ -188,23 +193,28 @@
 {#if testimonialBlock}
   <section class="fancy-testimonial-section">
     <div class="fancy-testimonial-container">
-     {#if testimonialBlock.mainTitle}
-  <h2 class="testimonial-title">{testimonialBlock.mainTitle}</h2>
-{/if}
-{#if testimonialBlock.mainDescription}
-  <p class="testimonial-description">{testimonialBlock.mainDescription}</p>
-{/if}
+      {#if testimonialBlock.mainTitle}
+        <h2 class="testimonial-title">{testimonialBlock.mainTitle}</h2>
+      {/if}
+      {#if testimonialBlock.mainDescription}
+        <p class="testimonial-description">
+          {testimonialBlock.mainDescription}
+        </p>
+      {/if}
       <div class="fancy-testimonial-slider">
         <!-- Testimonial image -->
         <div class="fancy-slider-image-container">
           <div class="fancy-image-mask">
             {#each testimonials as testimonial, index (testimonial._key)}
-              <div class:fancy-active={currentTestimonial === index} class="fancy-testimonial-image">
+              <div
+                class:fancy-active={currentTestimonial === index}
+                class="fancy-testimonial-image"
+              >
                 {#if testimonial.image?.asset?._ref}
-                  <img 
-                    src={urlFor(testimonial.image).width(200).url()} 
-                    width="56" 
-                    height="56" 
+                  <img
+                    src={urlFor(testimonial.image).width(200).url()}
+                    width="56"
+                    height="56"
                     alt={testimonial.author}
                     loading="lazy"
                     class="fancy-testimonial-img"
@@ -214,29 +224,35 @@
             {/each}
           </div>
         </div>
-        
+
         <!-- Text -->
         <div class="fancy-slider-text">
           <div class="fancy-slider-track">
             {#each testimonials as testimonial, index (testimonial._key)}
-              <div class:fancy-active={currentTestimonial === index} class="fancy-testimonial-quote">
+              <div
+                class:fancy-active={currentTestimonial === index}
+                class="fancy-testimonial-quote"
+              >
                 <div class="fancy-quote-text">"{testimonial.review}"</div>
               </div>
             {/each}
           </div>
         </div>
-        
+
         <!-- Buttons -->
         <div class="fancy-slider-buttons">
           {#each testimonials as testimonial, index (testimonial._key)}
             <button
               class:fancy-active={currentTestimonial === index}
               class="fancy-slider-button"
-              on:click={() => { goToTestimonial(index); stopAutorotate(); }}
+              on:click={() => {
+                goToTestimonial(index);
+                stopAutorotate();
+              }}
             >
-              <span>{testimonial.author}</span> 
-              <span class:fancy-active={currentTestimonial === index}>-</span> 
-              <span>{testimonial.role || 'Client'}</span>
+              <span>{testimonial.author}</span>
+              <span class:fancy-active={currentTestimonial === index}>-</span>
+              <span>{testimonial.role || "Client"}</span>
             </button>
           {/each}
         </div>
@@ -257,14 +273,6 @@
     overflow: hidden;
   }
 
-  #particles-js {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    top: 0;
-    left: 0;
-  }
 
   .hero-content {
     position: relative;
@@ -337,7 +345,7 @@
   }
 
   .section-label:before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 50%;
@@ -388,7 +396,7 @@
   }
 
   .modern-button:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -423,7 +431,9 @@
     overflow: hidden;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
     transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    transition:
+      transform 0.5s ease,
+      box-shadow 0.5s ease;
   }
 
   .modern-image-wrapper:hover {
@@ -457,7 +467,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(13, 121, 211, 0.1) 0%, rgba(10, 93, 160, 0.1) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(13, 121, 211, 0.1) 0%,
+      rgba(10, 93, 160, 0.1) 100%
+    );
     mix-blend-mode: multiply;
     pointer-events: none;
   }
@@ -467,7 +481,7 @@
     position: relative;
     padding: 2rem 2rem;
     background-color: #f8fafc;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
   .fancy-testimonial-container {
@@ -475,10 +489,10 @@
     margin: 0 auto;
     text-align: center;
   }
-  .testimonial-title{
-   color:#0d79d3;
-   font-size:2.5rem;
-   margin-bottom:0;
+  .testimonial-title {
+    color: #0d79d3;
+    font-size: 2.5rem;
+    margin-bottom: 0;
   }
 
   .fancy-testimonial-title {
@@ -491,7 +505,7 @@
   }
 
   .fancy-testimonial-title:after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -10px;
     left: 50%;
@@ -519,7 +533,7 @@
     position: relative;
     height: 8rem;
     margin-bottom: 2rem;
-    margin-top:8%;
+    margin-top: 8%;
   }
 
   .fancy-image-mask {
@@ -527,16 +541,21 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width:680px;
+    width: 680px;
     height: 680px;
     pointer-events: none;
   }
 
   .fancy-image-mask:before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, #0d7ad35e, #0d7ad318 25%, rgba(99, 102, 241, 0) 0%);
+    background: linear-gradient(
+      to bottom,
+      #0d7ad35e,
+      #0d7ad318 25%,
+      rgba(99, 102, 241, 0) 0%
+    );
     border-radius: 50%;
     z-index: -10;
   }
@@ -548,7 +567,6 @@
     opacity: 0;
     transform: rotate(-60deg);
     transition: all 0.7s cubic-bezier(0.68, -0.3, 0.32, 1);
-    
   }
 
   .fancy-testimonial-image.fancy-active {
@@ -575,7 +593,7 @@
     position: relative;
     transition: height 0.3s ease;
   }
-  
+
   .fancy-testimonial-quote {
     position: absolute;
     top: 0;
@@ -598,13 +616,12 @@
     color: #1e293b;
   }
 
-
   .fancy-slider-buttons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin: -0.375rem;
-    margin-bottom:5%;
+    margin-bottom: 5%;
   }
 
   .fancy-slider-button {
@@ -647,29 +664,29 @@
       gap: 2rem;
       margin: 5rem auto;
     }
-    
+
     .section-title {
       font-size: 2.2rem;
       max-width: 100%;
     }
-    
+
     .section-description {
       max-width: 100%;
     }
-    .hero-content h1{
-      font-size:3rem;
+    .hero-content h1 {
+      font-size: 3rem;
     }
-    .hero-content p{
-      font-size:1.25rem;
+    .hero-content p {
+      font-size: 1.25rem;
     }
-    .hero-section{
-      height:80vh;
+    .hero-section {
+      height: 80vh;
     }
-    .testimonial-title{
-      font-size:1.8rem;
+    .testimonial-title {
+      font-size: 1.8rem;
     }
-    .fancy-testimonial-img{
-      left:18%;
+    .fancy-testimonial-img {
+      left: 18%;
     }
   }
 
@@ -680,35 +697,35 @@
       padding: 0 1.5rem;
       margin: 2rem auto;
     }
-    
+
     .image-text-section.reversed {
       flex-direction: column;
     }
-    
+
     .text-column {
       padding: 1rem 0;
     }
-    
+
     .section-label {
       padding-left: 0;
       margin-left: auto;
       margin-right: auto;
     }
-    
+
     .section-label:before {
       display: none;
     }
-    
+
     .section-title {
       font-size: 2rem;
       margin-left: auto;
       margin-right: auto;
     }
-    
+
     .modern-button {
       margin: 0 auto;
     }
-    
+
     .modern-image-wrapper {
       max-width: 100%;
     }
@@ -735,11 +752,11 @@
     .section-title {
       font-size: 1.8rem;
     }
-    
+
     .section-description {
       font-size: 1rem;
     }
-    
+
     .modern-button {
       padding: 0.75rem 1.5rem;
     }
@@ -762,39 +779,43 @@
     }
   }
 
-   .illustration-section {
+  .illustration-section {
     /* Your existing section styles */
     overflow: hidden;
   }
 
   .marquee-container {
-    height: 100px; 
+    height: 100px;
     display: flex;
     align-items: center;
     overflow: hidden;
     width: 100%;
-    margin-top:10%;
+    margin-top: 10%;
   }
 
   .marquee-text {
     white-space: nowrap;
     text-transform: uppercase;
-    font-size: 5em; 
-    font-weight:bold;
+    font-size: 5em;
+    font-weight: bold;
     flex-shrink: 0;
     padding: 0 20px;
     width: max-content;
     display: flex;
     align-items: center;
     animation: text-scroll 20s linear infinite;
-    color:#ffffff;
-    padding:5%;
-    background:#0d79d3;
+    color: #ffffff;
+    padding: 5%;
+    background: #0d79d3;
   }
 
   @keyframes text-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 
   /* Pause animation on hover */
@@ -808,8 +829,12 @@
       font-size: 2em;
     }
     @keyframes text-scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
     }
   }
 
@@ -821,5 +846,4 @@
       height: 70px;
     }
   }
-
 </style>

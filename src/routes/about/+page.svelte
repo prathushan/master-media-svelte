@@ -1,66 +1,65 @@
 <script lang="ts">
-  import { urlFor } from '$lib/utils/image-builder';
+  import { urlFor } from "$lib/utils/image-builder";
+  import Particles from "$lib/components/Particles.svelte";
   export let data;
 
   const page = data.aboutPage;
 </script>
 
 <svelte:head>
-  <title>{page?.title ?? 'About'}</title>
+  <title>{page?.title ?? "About"}</title>
 </svelte:head>
 
 {#if page?.content}
   {#each page.content as section (section._key)}
     {#each section.block as block (block._key)}
-      {#if block._type === 'heroSection'}
-        <section class="hero" style="background-image: url('{urlFor(block.backgroundImage).width(1600).height(900).auto('format').quality(80).url()}')">
-          <div class="hero-content">
-            <h1>{block.title}</h1>
-          </div>
-        </section>
-
-      {:else if block._type === 'imageWithText'}
+      {#if block._type === "heroSection"}
+        <Particles title={block.title} subtitle={""} />
+      {:else if block._type === "imageWithText"}
         <section class="image-text">
           <div class="image-text-container">
             <div class="image-col">
-              <img src="{urlFor(block.image).width(800).url()}" alt="{block.title}" />
+              <img
+                src={urlFor(block.image).width(800).url()}
+                alt={block.title}
+              />
             </div>
             <div class="text-col">
               <div>
-              <h2>{block.title}</h2>
-              <p>{block.description}</p>
+                <h2>{block.title}</h2>
+                <p>{block.description}</p>
               </div>
               <div>
-              {#if block.button}
-                <button>{block.button.label}</button>
-              {/if}
+                {#if block.button}
+                  <button>{block.button.label}</button>
+                {/if}
               </div>
             </div>
           </div>
         </section>
-
-      {:else if block._type === 'textBlock'}
+      {:else if block._type === "textBlock"}
         {#each block.text as textBlock}
-          {#if textBlock.style === 'h2'}
+          {#if textBlock.style === "h2"}
             <h2 class="section-heading">{textBlock.children[0].text}</h2>
-          {:else if textBlock.style === 'normal'}
+          {:else if textBlock.style === "normal"}
             <p class="section-description">{textBlock.children[0].text}</p>
           {/if}
         {/each}
-
-      {:else if block._type === 'buttonBlock'}
+      {:else if block._type === "buttonBlock"}
         <div class="section-button">
           <!-- <button>{block.text}</button> -->
         </div>
-
-      {:else if block._type === 'cardSection'}
+      {:else if block._type === "cardSection"}
         <section class="team-section">
           <!-- <h2 class="team-title">{block.sectionTitle}</h2> -->
           <div class="team-grid">
             {#each block.cards as member (member._key)}
               <div class="team-card">
                 <div class="team-image-wrapper">
-                  <img src="{urlFor(member.image).width(500).url()}" alt="{member.title}" />
+                  <img
+                    src={urlFor(member.image).width(500).url()}
+                    alt={member.title}
+                  />
                 </div>
                 <h3>{member.title}</h3>
                 <p>{member.paragraph}</p>
@@ -119,22 +118,20 @@
     border-radius: 8px;
   }
 
-  .text-col {  
+  .text-col {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex: 1 1 45%;
-    padding:1rem 0;
+    padding: 1rem 0;
   }
 
   .text-col h2 {
-    color:#0d79d3;
+    color: #0d79d3;
     font-size: 2rem;
-    margin-top:0;
+    margin-top: 0;
     margin-bottom: 1rem;
   }
-
- 
 
   .text-col p {
     font-size: 1.1rem;
@@ -146,14 +143,14 @@
     padding: 0.6rem 1.2rem;
     font-size: 1rem;
     border: none;
-    background-color:#0d79d3;
-    border-radius:5px;
+    background-color: #0d79d3;
+    border-radius: 5px;
     color: #fff;
     cursor: pointer;
   }
 
   .section-heading {
-    color:#0d79d3;
+    color: #0d79d3;
     font-size: 2rem;
     margin: 1rem 0 1rem;
     text-align: center;
@@ -175,7 +172,7 @@
   .section-button button {
     font-size: 1rem;
     padding: 0.6rem 1.2rem;
-    background-color:  #0d79d3;
+    background-color: #0d79d3;
     color: white;
     border: none;
     border-radius: 6px;
@@ -187,7 +184,7 @@
   }
 
   .team-title {
-    color:#0d79d3;
+    color: #0d79d3;
     text-align: center;
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -213,18 +210,16 @@
   }
 
   .team-image-wrapper img {
-     max-width: 100%;
-  display: block;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  object-position: top;
+    max-width: 100%;
+    display: block;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: top;
   }
 
   .team-card:hover .team-image-wrapper {
     filter: grayscale(0%);
   }
-
-
 
   .team-card h3 {
     margin-top: 1rem;
