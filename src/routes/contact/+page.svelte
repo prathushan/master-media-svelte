@@ -100,8 +100,89 @@
 {:else}
   <p>Loading content...</p>
 {/if}
+<div class="rev-con-form">
+            <div class="map-container">
+          <h3>Our Location</h3>
+          <div class="map-embed">
+            {#if mapIframeSrc}
+              <iframe
+                src={mapIframeSrc}
+                width="100%"
+                height="300"
+                style="border:0;"
+                allowfullscreen
+                loading="lazy"
+                title="map"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            {:else}
+              <!-- Fallback if no iframe found -->
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256018898!2d-73.98784492426788!3d40.74844097138992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1712345678901!5m2!1sen!2sus"
+                width="100%"
+                height="300"
+                style="border:0;"
+                allowfullscreen
+                loading="lazy"
+                title="map"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            {/if}
+          </div>
+          <div class="map-overlay"></div>
+          <div class="contact-info">
+            <p><strong>Address:</strong> 123 Main Street, New York, NY 10001</p>
+            <p><strong>Email:</strong> info@mastermedia1.com</p>
+            <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+          </div>
+        </div>
+    <div class="contact-form-wrapper">
+    <h2>Get in Touch</h2>
+    {#if submitSuccess}
+      <div class="success-message">
+        <p>Thank you for your message! We'll get back to you soon.</p>
+      </div>
+    {:else}
+      <form class="contact-form" on:submit|preventDefault={handleSubmit}>
+        <div class="form-group">
+          <input type="text" id="name" bind:value={name} required />
+          <label for="name">Name *</label>
+          <div class="border-line"></div>
+        </div>
 
-<div class="contact-form-bg">
+        <div class="form-group">
+          <input type="text" id="phone" bind:value={phone} required />
+          <label for="phone">Phone *</label>
+          <div class="border-line"></div>
+        </div>
+
+        <div class="form-group">
+          <input type="email" id="email" bind:value={email} required />
+          <label for="email">Email *</label>
+          <div class="border-line"></div>
+        </div>
+
+        <div class="form-group textarea-group">
+          <textarea id="message" bind:value={message} required></textarea>
+          <label for="message">Message *</label>
+          <div class="border-line"></div>
+        </div>
+
+        {#if submitError}
+          <div class="error-message">{submitError}</div>
+        {/if}
+
+        <button type="submit" class="submit-btn" disabled={isSubmitting}>
+          {isSubmitting ? "Sending..." : "Send Message"}
+        </button>
+      </form>
+    {/if}
+  </div>
+
+
+</div>
+
+<!-- <div class="contact-form-bg">
   <div class="contact-form-wrapper">
     <h2>Get in Touch</h2>
     {#if submitSuccess}
@@ -144,7 +225,7 @@
       </form>
     {/if}
   </div>
-</div>
+</div> -->
 
 <!-- Contact Form Section -->
 <section class="contact-section">
@@ -155,48 +236,22 @@
       <!-- Map and FAQ Section -->
       <div class="map-faq-wrapper">
         <!-- Map -->
-        <div class="map-container">
-          <h3>Our Location</h3>
-          <div class="map-embed">
-            {#if mapIframeSrc}
-              <iframe
-                src={mapIframeSrc}
-                width="100%"
-                height="300"
-                style="border:0;"
-                allowfullscreen
-                loading="lazy"
-                title="map"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            {:else}
-              <!-- Fallback if no iframe found -->
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256018898!2d-73.98784492426788!3d40.74844097138992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1712345678901!5m2!1sen!2sus"
-                width="100%"
-                height="300"
-                style="border:0;"
-                allowfullscreen
-                loading="lazy"
-                title="map"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            {/if}
-          </div>
-          <div class="map-overlay"></div>
-          <div class="contact-info">
-            <p><strong>Address:</strong> 123 Main Street, New York, NY 10001</p>
-            <p><strong>Email:</strong> info@mastermedia1.com</p>
-            <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-          </div>
-        </div>
+
 
         <!-- FAQ -->
         {#each page.content as section (section._key)}
           {#each section.block as block (block._key)}
             {#if block._type === "faqSection"}
+ <div class="faq-section-div">
+            <div class="faq-section-des">
+  <h2>{block.title}</h2>
+  <p>With so many flexible HR solutions available, you might have a few questions. Hopefully these FAQs will provide some of the answers you’re looking for.
+    With so many flexible HR solutions available, you might have a few questions. Hopefully these FAQs will provide some of the answers you’re looking for.
+  </p>
+</div>
               <div class="faq-container">
-                <h3>{block.title}</h3>
+
+                <!-- <h3>{block.title}</h3> -->
                 <div class="faq-list">
                   {#each block.faqs as faq, index (faq._key)}
                     <div
@@ -224,6 +279,7 @@
                   {/each}
                 </div>
               </div>
+  </div>            
             {/if}
           {/each}
         {/each}
@@ -233,6 +289,30 @@
 </section>
 
 <style>
+
+
+  .faq-section-div{
+display:flex;
+gap:30px;
+  }
+  .faq-section-des{
+width:40%;
+  }
+
+  .rev-con-form{
+        background: linear-gradient(135deg, #1c1c69 0%, #16213e 100%);
+    display:flex;
+    flex-direction: row;
+    width:100%;
+    gap:20px;
+    padding: 4rem 2rem;
+  }
+  .rev-con-form .map-container{
+    width:50%;
+  }
+   .rev-con-form .contact-form-wrapper{
+    width:50%;
+   }
   /* Hero Section */
   .hero {
     position: relative;
@@ -249,7 +329,7 @@
   }
   .contact-form-bg {
     padding: 4rem 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    background: linear-gradient(135deg, #1c1c69 0%, #16213e 100%);
 
     color: white;
   }
@@ -283,9 +363,11 @@
 
   /* Contact Section */
   .contact-section {
+    /* min-height:900px; */
     padding: 4rem 0;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     color: white;
+
   }
 
   .container {
@@ -382,21 +464,30 @@
   .submit-btn {
     width: 100%;
     padding: 1rem;
-    background: linear-gradient(90deg, #4cc9f0 0%, #4361ee 100%);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  border-radius: 9999px;
     margin-top: 1rem;
+     font-size: 0.9rem;
+  border: none;
+
+  transition: all 0.2s ease;
+  background: #0d79d3;
+  color: white;
+  box-shadow: inset 4px 4px 8px #0a5fa6, inset -4px -4px 8px #1294ff;
+   white-space: nowrap;
   }
 
   .submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+  color: #0d79d3;
+      box-shadow: inset 2px 2px 6px #d1d9e6, inset -2px -2px 6px #ffffff;
+  background-color: #f0f0f3;
   }
+
+
 
   .submit-btn:disabled {
     background: #ccc;
@@ -426,13 +517,16 @@
     flex-direction: row;
     gap: 2rem;
     width: 100%;
+    max-width:1440px;
+    margin: 0 auto;
   }
+
 
   .map-container {
     background: rgba(255, 255, 255, 0.05);
-    width: 40%;
+    /* width: 40%; */
     backdrop-filter: blur(10px);
-    border-radius: 15px;
+    border-radius: 10px;
     padding: 2rem;
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -458,16 +552,12 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    background: linear-gradient(
-      to bottom,
-      rgba(22, 33, 62, 0.2) 0%,
-      rgba(22, 33, 62, 0.8) 100%
-    );
+
   }
 
   .contact-info p {
     margin: 0.5rem 0;
-    color: rgba(255, 255, 255, 0.8);
+    color: #fff;
   }
 
   .contact-info strong {

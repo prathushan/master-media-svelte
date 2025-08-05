@@ -17,7 +17,7 @@ html {
 * {
   box-sizing: border-box;
 }
-p,nav{
+p,nav,button{
   font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 

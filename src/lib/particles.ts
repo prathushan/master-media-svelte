@@ -15,7 +15,7 @@ export const particleConfig = {
     line_linked: {
       enable: true,
       distance: 150,
-      color: "#0d79d3",
+      color: "#61b3f6",
       opacity: 0.4,
       width: 1
     },

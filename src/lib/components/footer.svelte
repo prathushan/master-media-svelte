@@ -26,6 +26,12 @@
           <p>{footerData.footerText}</p>
         </div>
       {/if}
+        <!-- Copyright -->
+  {#if footerData?.copyrightText}
+    <div >
+      <p>{footerData.copyrightText}</p>
+    </div>
+  {/if}
     </div>
 
     <!-- Column 2: Useful Links -->
@@ -84,12 +90,7 @@
     </div>
   {/if}
 
-  <!-- Copyright -->
-  {#if footerData?.copyrightText}
-    <div class="footer-bottom">
-      <p>{footerData.copyrightText}</p>
-    </div>
-  {/if}
+
 </footer>
 
 <style>
