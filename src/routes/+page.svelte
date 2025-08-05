@@ -399,6 +399,8 @@ function handleScroll() {
     overflow: hidden;
     position: relative;
     z-index: 1;
+    cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMyIgaGVpZ2h0PSIyMyIgdmlld0JveD0iMCAwIDE0IDE0Ij4KCTxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2I1YjFiMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTAuNSA2LjEzYTIgMiAwIDAgMSAxLjU5IDIuMjRsLS42MSA0LjI3YTEgMSAwIDAgMS0xIC44Nkg0YTEgMSAwIDAgMS0uOTMtLjYzTDIgMTAuMjFhMiAyIDAgMCAxIDEtMi41M0w0LjM1IDdWMmExLjUgMS41IDAgMCAxIDMgMHYzLjV6IiBzdHJva2Utd2lkdGg9IjEiIC8+Cjwvc3ZnPg=="),
+    default;
   }
 
   .modern-button:before {
@@ -618,6 +620,8 @@ function handleScroll() {
   justify-content: center;
   margin: -0.375rem;
   margin-bottom: 5%;
+   cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMyIgaGVpZ2h0PSIyMyIgdmlld0JveD0iMCAwIDE0IDE0Ij4KCTxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2I1YjFiMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTAuNSA2LjEzYTIgMiAwIDAgMSAxLjU5IDIuMjRsLS42MSA0LjI3YTEgMSAwIDAgMS0xIC44Nkg0YTEgMSAwIDAgMS0uOTMtLjYzTDIgMTAuMjFhMiAyIDAgMCAxIDEtMi41M0w0LjM1IDdWMmExLjUgMS41IDAgMCAxIDMgMHYzLjV6IiBzdHJva2Utd2lkdGg9IjEiIC8+Cjwvc3ZnPg=="),
+    default;
 }
 
 .fancy-slider-button {
@@ -635,6 +639,8 @@ function handleScroll() {
   background: #f0f0f3;
   color: #0d79d3;
   box-shadow: 6px 6px 12px #c8c8cc, -6px -6px 12px #ffffff;
+  cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMyIgaGVpZ2h0PSIyMyIgdmlld0JveD0iMCAwIDE0IDE0Ij4KCTxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2I1YjFiMSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMTAuNSA2LjEzYTIgMiAwIDAgMSAxLjU5IDIuMjRsLS42MSA0LjI3YTEgMSAwIDAgMS0xIC44Nkg0YTEgMSAwIDAgMS0uOTMtLjYzTDIgMTAuMjFhMiAyIDAgMCAxIDEtMi41M0w0LjM1IDdWMmExLjUgMS41IDAgMCAxIDMgMHYzLjV6IiBzdHJva2Utd2lkdGg9IjEiIC8+Cjwvc3ZnPg=="),
+    default;
 }
 
 .fancy-slider-button:hover {
@@ -782,6 +788,7 @@ function handleScroll() {
    .illustration-section {
     /* Your existing section styles */
     overflow: hidden;
+
   }
 
  .marquee-container {

@@ -50,17 +50,18 @@
                     <div class="box">
                       <div class="imgBox">
                         {#if card.image?.asset?._ref}
-                          <img
-                            src={urlFor(card.image.asset)}
-                            alt={card.title}
+                          <img 
+                            src="{urlFor(card.image.asset).width(400).url()}" 
+                            alt="{card.title}"
+                            loading="lazy"
+                            width="400"
+                            height="300"
                           />
                         {/if}
                       </div>
                       <div class="icon">
                         <a class="iconBox">
-                          <span class="material-symbols-outlined"
-                            >arrow_outward</span
-                          >
+                          <span class="material-symbols-outlined">arrow_outward</span>
                         </a>
                       </div>
                     </div>
@@ -116,7 +117,7 @@
 
   .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
 
@@ -144,6 +145,15 @@
     overflow: hidden;
     position: relative;
     text-decoration: none;
+    /* Neomorphism effect */
+    box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.1),
+                -8px -8px 15px rgba(255, 255, 255, 0.8);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .box:hover {
+    box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.1),
+               -12px -12px 20px rgba(255, 255, 255, 0.8);
   }
 
   .imgBox {
@@ -155,6 +165,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .imgBox:hover img {
+    transform: scale(1.03);
   }
 
   .icon {
@@ -200,6 +215,10 @@
   }
 
   @media (max-width: 768px) {
+    .card-grid {
+      grid-template-columns: repeat(1, 1fr);
+    }
+
     .card-inner {
       height: 240px;
     }
@@ -214,15 +233,5 @@
     }
   }
 
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* force 3 columns always */
-    gap: 2rem;
-  }
-
-  @media (max-width: 768px) {
-    .card-grid {
-      grid-template-columns: repeat(1, 1fr);
-    }
-  }
 </style>
+
