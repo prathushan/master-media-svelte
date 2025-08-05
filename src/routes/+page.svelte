@@ -65,18 +65,30 @@
   // Animation triggers
   let animatedElements = [];
   
-  function handleScroll() {
-    animatedElements.forEach((el, index) => {
-      const rect = el.getBoundingClientRect();
-      const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom >= 0;
-      
-      if (isVisible) {
-        el.classList.add('animate-in');
-        // Remove after animation completes to optimize performance
-        setTimeout(() => animatedElements.splice(index, 1), 1000);
-      }
-    });
-  }
+function handleScroll() {
+  const remainingElements = [];
+
+  animatedElements.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom >= 0;
+
+    if (isVisible) {
+      el.classList.add('animate-in');
+
+      // Remove from array only when animation finishes
+      const onAnimationEnd = () => {
+        el.removeEventListener('animationend', onAnimationEnd);
+        animatedElements = animatedElements.filter(e => e !== el);
+      };
+
+      el.addEventListener('animationend', onAnimationEnd);
+    } else {
+      remainingElements.push(el);
+    }
+  });
+
+  animatedElements = remainingElements;
+}
 
   onMount(() => {
     if (typeof window !== 'undefined' && window.particlesJS) {
@@ -679,6 +691,7 @@
       text-align: center;
       padding: 0 1.5rem;
       margin: 2rem auto;
+
     }
     
     .image-text-section.reversed {
@@ -708,7 +721,7 @@
     .modern-button {
       margin: 0 auto;
     }
-    
+ 
     .modern-image-wrapper {
       max-width: 100%;
     }
@@ -823,3 +836,4 @@
   }
 
 </style>
+
