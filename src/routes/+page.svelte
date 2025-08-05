@@ -232,7 +232,7 @@ function handleScroll() {
           <div class="fancy-slider-track">
             {#each testimonials as testimonial, index (testimonial._key)}
               <div class:fancy-active={currentTestimonial === index} class="fancy-testimonial-quote">
-                <div class="fancy-quote-text">"{testimonial.review}"</div>
+                <div class="fancy-quote-text"><i>"{testimonial.review}"</i></div>
               </div>
             {/each}
           </div>
@@ -312,6 +312,8 @@ function handleScroll() {
     padding: 0 2rem;
     gap: 4rem;
     opacity: 0;
+    margin-top:2rem;
+    margin-bottom:2rem;
   }
 
   .image-text-section.animate-in {
@@ -605,53 +607,55 @@ function handleScroll() {
   }
 
   .fancy-quote-text {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.3rem;
     color: #1e293b;
+    
   }
-
 
   .fancy-slider-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: -0.375rem;
-    margin-bottom:5%;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: -0.375rem;
+  margin-bottom: 5%;
+}
 
-  .fancy-slider-button {
-    display: inline-flex;
-    justify-content: center;
-    white-space: nowrap;
-    border-radius: 9999px;
-    padding: 0.8rem 0.75rem;
-    margin: 0.375rem;
-    font-size: 0.8rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    transition: all 0.15s ease;
-    border: none;
-    cursor: pointer;
-    background-color: white;
-    color: #0d79d3;
-  }
+.fancy-slider-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  border-radius: 9999px;
+  padding: 0.8rem 1.2rem;
+  margin: 0.375rem;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f0f0f3;
+  color: #0d79d3;
+  box-shadow: 6px 6px 12px #c8c8cc, -6px -6px 12px #ffffff;
+}
 
-  .fancy-slider-button:hover {
-    background-color: #e0e7ff;
-  }
+.fancy-slider-button:hover {
+  box-shadow: inset 2px 2px 6px #d1d9e6, inset -2px -2px 6px #ffffff;
+  background-color: #f0f0f3;
+}
 
-  .fancy-slider-button.fancy-active {
-    background-color: #0d79d3;
-    color: white;
-    box-shadow: 0 1px 3px 0 rgba(99, 102, 241, 0.1);
-  }
+.fancy-slider-button.fancy-active {
+  background: #0d79d3;
+  color: white;
+  box-shadow: inset 4px 4px 8px #0a5fa6, inset -4px -4px 8px #1294ff;
+}
 
-  .fancy-slider-button span {
-    transition: color 0.15s ease;
-  }
+.fancy-slider-button span {
+  transition: color 0.15s ease;
+}
 
-  .fancy-slider-button span.fancy-active {
-    color: #a5b4fc;
-  }
+.fancy-slider-button span.fancy-active {
+  color: #d6e0ff;
+}
+
 
   /* Responsive adjustments */
   @media (max-width: 1024px) {
@@ -780,34 +784,42 @@ function handleScroll() {
     overflow: hidden;
   }
 
-  .marquee-container {
-    height: 100px; 
+ .marquee-container {
+    height: 100px;
     display: flex;
     align-items: center;
     overflow: hidden;
     width: 100%;
-    margin-top:10%;
+    margin-top: 2%;
+    position: relative;
+    background: #0d79d3;
+  }
+
+  .marquee-content {
+    display: flex;
+    width: max-content;
   }
 
   .marquee-text {
     white-space: nowrap;
     text-transform: uppercase;
-    font-size: 5em; 
-    font-weight:bold;
-    flex-shrink: 0;
+    font-size: 5em;
+    font-weight: bold;
     padding: 0 20px;
-    width: max-content;
     display: flex;
     align-items: center;
+    color: #ffffff;
     animation: text-scroll 20s linear infinite;
-    color:#ffffff;
-    padding:5%;
-    background:#0d79d3;
+    flex-shrink: 0;
   }
 
   @keyframes text-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
   }
 
   /* Pause animation on hover */
@@ -820,10 +832,6 @@ function handleScroll() {
     .marquee-text {
       font-size: 2em;
     }
-    @keyframes text-scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
   }
 
   @media (max-width: 480px) {
@@ -834,6 +842,5 @@ function handleScroll() {
       height: 70px;
     }
   }
-
 </style>
 
