@@ -181,6 +181,10 @@
     font-size: 0.85rem;
     color: #666;
   }
+  .footer-contact p a{
+    text-decoration:none;
+    color:#333;
+  }
 
   @media (max-width: 768px) {
     .footer-columns {
@@ -193,6 +197,15 @@
     .footer-links,
     .footer-contact {
       width: 100%;
+      flex:0;
     }
+    .footer-logo{
+      display:flex;
+      justify-content:center;
+    }
+    .footer{
+     padding:1rem;
+    }
+
   }
 </style>
