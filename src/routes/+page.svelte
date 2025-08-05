@@ -90,7 +90,6 @@ function handleScroll() {
   animatedElements = remainingElements;
 }
 
-
   onMount(() => {
     if (typeof window !== 'undefined' && window.particlesJS) {
       window.particlesJS('particles-js', particleConfig);
@@ -692,6 +691,7 @@ function handleScroll() {
       text-align: center;
       padding: 0 1.5rem;
       margin: 2rem auto;
+
     }
     
     .image-text-section.reversed {
@@ -721,7 +721,7 @@ function handleScroll() {
     .modern-button {
       margin: 0 auto;
     }
-    
+ 
     .modern-image-wrapper {
       max-width: 100%;
     }
@@ -836,3 +836,4 @@ function handleScroll() {
   }
 
 </style>
+
