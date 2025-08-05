@@ -300,7 +300,6 @@
     padding: 0 2rem;
     gap: 4rem;
     opacity: 0;
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
   }
 
   .image-text-section.animate-in {
@@ -657,6 +656,21 @@
     .section-description {
       max-width: 100%;
     }
+    .hero-content h1{
+      font-size:3rem;
+    }
+    .hero-content p{
+      font-size:1.25rem;
+    }
+    .hero-section{
+      height:80vh;
+    }
+    .testimonial-title{
+      font-size:1.8rem;
+    }
+    .fancy-testimonial-img{
+      left:18%;
+    }
   }
 
   @media (max-width: 768px) {
@@ -664,7 +678,7 @@
       flex-direction: column;
       text-align: center;
       padding: 0 1.5rem;
-      margin: 4rem auto;
+      margin: 2rem auto;
     }
     
     .image-text-section.reversed {
@@ -700,7 +714,7 @@
     }
 
     .fancy-testimonial-section {
-      padding: 6rem 1.5rem;
+      padding: 1rem 1.5rem;
     }
 
     .fancy-testimonial-title {
