@@ -12,7 +12,7 @@ export const pageQuery = groq`*[_type == "page" && slug.current == $slug][0]{
     _key,
     _type,
     label,
-    block[]{
+    block[]{ 
       _key,
       _type,
       ...,
